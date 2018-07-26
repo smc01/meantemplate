@@ -1,4 +1,5 @@
 const express = require("express");
+const chalk = require("chalk");
 
 const app = express();
 const portNumber = 3000;
@@ -9,5 +10,5 @@ app.get('/', function(req,res){
 
 
 app.listen(portNumber, function(){
-    console.log('start server on port ' + portNumber);
+    console.log(`start server on port ${chalk.green(portNumber)}`);
 });
