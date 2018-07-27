@@ -5,7 +5,7 @@ const debug = require('debug')('app');
 const morgan = require('morgan');
 
 const app = express();
-const portNumber = 3000;
+const portNumber = process.env.port || 3000;
 
 app.use(morgan('tiny'));
 

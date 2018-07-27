@@ -5,9 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-win": "set DEBUG=app & node server.js",
-    "start-linux":"DEBUG=app node server.js" 
-
+    "start-win": "set DEBUG=app & nodemon server.js",
+    "start-linux": "DEBUG=app nodemon server.js"
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +14,13 @@
     "chalk": "^2.4.1",
     "debug": "^3.1.0",
     "express": "^4.16.3",
-    "morgan": "^1.9.0"
+    "morgan": "^1.9.0",
+    "nodemon": "^1.18.3"
+  },
+  "nodemonConfig":{
+    "env": {
+      "NODE_ENV": "development",
+      "port": 3300
+    }
   }
 }
