@@ -73,3 +73,4 @@ typings/
 .serverless
 
 backend/package-lock.json
+backend/db/sqlite3
