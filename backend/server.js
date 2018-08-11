@@ -15,6 +15,7 @@ app.use(morgan('tiny'));
 app.get('/', function(req,res){
     res.send('sample app');
 });
+
 app.get('/books', function (req, res) {
     // open the database
 let db = new sqlite3.Database('./db/PersonalBookStore.db', sqlite3.OPEN_READWRITE, (err) => {
@@ -26,27 +27,61 @@ let db = new sqlite3.Database('./db/PersonalBookStore.db', sqlite3.OPEN_READWRIT
    
 const sql = 'select id, title from  Book';
 
-  db.all(sql, [], (err, rows)=>{
+db.all(sql, [], (err, rows)=>{
 
-    if(err){
-        console.log('error on getting data');
+  if(err){
+      console.log('error on getting data');
+  }
+
+  rows.forEach((row)=>{
+      console.log(row.title);
+  });
+
+  res.json(rows);
+
+});
+  
+db.close((err) => {
+  if (err) {
+    console.error(err.message);
+  }
+  console.log('Close the database connection.');
+});
+  });
+
+app.get('/books/:id', function (req, res) {
+  
+  let id = req.params.id;
+  
+  console.log(req.params);
+
+  let db = new sqlite3.Database('./db/PersonalBookStore.db', sqlite3.OPEN_READWRITE, (err) => {
+    if (err) {
+      console.error(err.message);
     }
+    console.log('Connected to the PersonalBookStore database to get a book.');
+  });
 
-    rows.forEach((row)=>{
-        console.log(row.title);
-    });
+  const sql = 'SELECT id, title FROM Book WHERE Id = ?';
+
+  db.get(sql, [id], (err, rows)=>{
+    
+    if(err){
+      console.log('error on getting data');
+    }
 
     res.json(rows);
 
   });
-   
+
   db.close((err) => {
     if (err) {
       console.error(err.message);
     }
     console.log('Close the database connection.');
   });
-  })
+
+  });  
 app.listen(portNumber, function(){
     debug(`start server on port ${chalk.green(portNumber)}`);
 });
